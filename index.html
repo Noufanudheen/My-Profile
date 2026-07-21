@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Noufanudheen — Software Developer. MERN Stack, Three.js, modern web technologies. BCA graduate, MCA student." />
+  <title>Noufanudheen | Software Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="bg-poly bg-poly-1"></div>
+    <div class="bg-poly bg-poly-2"></div>
+    <div class="bg-poly bg-poly-3"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <input type="checkbox" id="menu-toggle" class="menu-toggle-input" aria-hidden="true" />
+
+  <header id="site-header" role="banner">
+    <nav id="main-nav" role="navigation" aria-label="Main navigation">
+      <a href="#hero" class="nav-logo" aria-label="Noufanudheen home">
+        <span class="logo-text">N<span class="logo-dot">.</span></span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#about"    class="nav-link" id="nav-about">About</a></li>
+        <li><a href="#skills"   class="nav-link" id="nav-skills">Skills</a></li>
+        <li><a href="#projects" class="nav-link" id="nav-projects">Projects</a></li>
+        <li><a href="#contact"  class="nav-link" id="nav-contact">Contact</a></li>
+      </ul>
+
+      <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer"
+         class="btn btn-glass btn-sm" id="btn-github-nav" aria-label="View GitHub">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+
+      <label for="menu-toggle" class="hamburger" aria-label="Toggle mobile menu">
+        <span></span><span></span><span></span>
+      </label>
+    </nav>
+
+    <div class="mobile-nav-overlay" role="dialog" aria-label="Mobile navigation">
+      <ul role="list">
+        <li><label for="menu-toggle"><a href="#about"    class="nav-link" id="mnav-about">About</a></label></li>
+        <li><label for="menu-toggle"><a href="#skills"   class="nav-link" id="mnav-skills">Skills</a></label></li>
+        <li><label for="menu-toggle"><a href="#projects" class="nav-link" id="mnav-projects">Projects</a></label></li>
+        <li><label for="menu-toggle"><a href="#contact"  class="nav-link" id="mnav-contact">Contact</a></label></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+
+    <section id="hero" aria-labelledby="hero-heading">
+
+      <div class="hero-geo" aria-hidden="true">
+        <div class="geo-ring geo-ring-1"></div>
+        <div class="geo-ring geo-ring-2"></div>
+        <div class="geo-diamond"></div>
+        <svg class="geo-lines" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="250,20 480,180 400,440 100,440 20,180" stroke="rgba(0,170,255,0.12)" stroke-width="1" fill="none"/>
+          <polygon points="250,60 440,200 370,410 130,410 60,200" stroke="rgba(255,34,85,0.08)" stroke-width="1" fill="none"/>
+          <line x1="250" y1="20" x2="250" y2="480" stroke="rgba(0,170,255,0.06)" stroke-width="1"/>
+          <line x1="20"  y1="180" x2="480" y2="180" stroke="rgba(0,170,255,0.06)" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <div class="hero-content">
+        <p class="hero-greeting anim-fade-up" style="--d:0.1s">Hello, I'm</p>
+
+        <h1 id="hero-heading" class="hero-name anim-fade-up" style="--d:0.25s">
+          <span class="name-part">Noufan</span><span class="name-part accent-blue">udheen</span>
+        </h1>
+
+        <p class="hero-title anim-fade-up" style="--d:0.45s" aria-label="Software Developer">
+          <span class="title-prefix">—</span>
+          <span class="typing-wrap">
+            <span class="typing-text">Software Developer</span>
+          </span>
+        </p>
+
+        <p class="hero-subtitle anim-fade-up" style="--d:0.62s">
+          Crafting immersive digital experiences with code, curiosity, and caffeine.
+        </p>
+
+        <div class="hero-cta-group anim-fade-up" style="--d:0.78s" role="group" aria-label="Call to action">
+          <a href="#projects" class="btn btn-glass btn-primary" id="btn-view-work">View My Work</a>
+          <a href="#contact"  class="btn btn-neumorphic"        id="btn-get-in-touch">Get In Touch</a>
+        </div>
+
+        <div class="hero-socials anim-fade-up" style="--d:0.94s" role="list" aria-label="Social links">
+          <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer"
+             class="social-link" id="social-github" aria-label="GitHub" role="listitem">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/noufanudheen-c-96842925a/" target="_blank" rel="noopener noreferrer"
+             class="social-link" id="social-linkedin" aria-label="LinkedIn" role="listitem">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="mailto:noufanudheen@gmail.com"
+             class="social-link" id="social-email" aria-label="Send Email" role="listitem">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="scroll-cue anim-fade-up" style="--d:1.4s" aria-hidden="true">
+        <span class="scroll-line"></span>
+        <span class="scroll-label">scroll</span>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-heading">
+      <div class="section-container">
+        <header class="section-header">
+          <p class="section-label">Get to know me</p>
+          <h2 id="about-heading" class="section-title">About <span class="accent-blue">Me</span></h2>
+        </header>
+
+        <div class="about-grid">
+          <article class="about-card glass-card" id="about-card-bio">
+            <div class="about-avatar-wrap" aria-hidden="true">
+              <div class="avatar-ring"></div>
+              <div class="avatar-face">
+                <span aria-hidden="true">N</span>
+              </div>
+            </div>
+            <div class="about-body">
+              <p class="about-intro">
+                I'm <strong class="accent-blue">Noufanudheen</strong>, a passionate Software Developer
+                currently pursuing my <strong>MCA</strong>, building upon a completed <strong>BCA</strong>.
+              </p>
+              <p>
+                I love to experiment with new design paradigms and cutting-edge technologies in web development.
+                From precise CSS craft to immersive interface design, I'm always pushing what the browser can do.
+              </p>
+              <p>
+                When I'm not coding, I'm studying new frameworks, tinkering with creative tools,
+                or thinking about the next cinematic web experience.
+              </p>
+            </div>
+          </article>
+
+          <div class="stat-grid">
+            <div class="stat-card neu-card" id="stat-education">
+              <span class="stat-icon material-symbols-outlined" aria-hidden="true">school</span>
+              <h3 class="stat-label">Education</h3>
+              <p class="stat-value">BCA ✓<br/>MCA ongoing</p>
+            </div>
+            <div class="stat-card neu-card" id="stat-focus">
+              <span class="stat-icon material-symbols-outlined" aria-hidden="true">bolt</span>
+              <h3 class="stat-label">Focus</h3>
+              <p class="stat-value">Full Stack<br/>Web Dev</p>
+            </div>
+            <div class="stat-card neu-card" id="stat-projects">
+              <span class="stat-icon material-symbols-outlined" aria-hidden="true">rocket_launch</span>
+              <h3 class="stat-label">Projects</h3>
+              <p class="stat-value">5+ Public<br/>Repos</p>
+            </div>
+            <div class="stat-card neu-card" id="stat-passion">
+              <span class="stat-icon material-symbols-outlined" aria-hidden="true">palette</span>
+              <h3 class="stat-label">Passion</h3>
+              <p class="stat-value">Design &amp;<br/>3D Interfaces</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-heading">
+      <div class="section-container">
+        <header class="section-header">
+          <p class="section-label">What I work with</p>
+          <h2 id="skills-heading" class="section-title">Tech <span class="accent-red">Stack</span></h2>
+        </header>
+
+        <div class="skills-columns">
+
+          <div class="skills-group" id="skills-frontend">
+            <h3 class="skills-group-title">Frontend</h3>
+            <div class="skills-list">
+              <div class="skill-row glass-card" id="skill-html">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">language</span>
+                <div class="skill-info">
+                  <span class="skill-name">HTML5</span>
+                  <span class="skill-pct">95%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar blue" style="--w:95%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-css">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">palette</span>
+                <div class="skill-info">
+                  <span class="skill-name">CSS3</span>
+                  <span class="skill-pct">92%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar blue" style="--w:92%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-js">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">bolt</span>
+                <div class="skill-info">
+                  <span class="skill-name">JavaScript</span>
+                  <span class="skill-pct">90%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar blue" style="--w:90%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-react">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">hub</span>
+                <div class="skill-info">
+                  <span class="skill-name">React</span>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar blue" style="--w:80%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-group" id="skills-backend">
+            <h3 class="skills-group-title">Backend</h3>
+            <div class="skills-list">
+              <div class="skill-row glass-card" id="skill-node">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">dns</span>
+                <div class="skill-info">
+                  <span class="skill-name">Node.js</span>
+                  <span class="skill-pct">78%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar red" style="--w:78%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-express">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">route</span>
+                <div class="skill-info">
+                  <span class="skill-name">Express.js</span>
+                  <span class="skill-pct">75%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar red" style="--w:75%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-mongo">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">storage</span>
+                <div class="skill-info">
+                  <span class="skill-name">MongoDB</span>
+                  <span class="skill-pct">72%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar red" style="--w:72%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-python">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">code_blocks</span>
+                <div class="skill-info">
+                  <span class="skill-name">Python</span>
+                  <span class="skill-pct">68%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar red" style="--w:68%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skills-group" id="skills-tools">
+            <h3 class="skills-group-title">Tools</h3>
+            <div class="skills-list">
+              <div class="skill-row glass-card" id="skill-git">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">merge</span>
+                <div class="skill-info">
+                  <span class="skill-name">Git &amp; GitHub</span>
+                  <span class="skill-pct">82%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar purple" style="--w:82%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-ts">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">data_object</span>
+                <div class="skill-info">
+                  <span class="skill-name">TypeScript</span>
+                  <span class="skill-pct">65%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar purple" style="--w:65%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-shell">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">terminal</span>
+                <div class="skill-info">
+                  <span class="skill-name">Shell / Bash</span>
+                  <span class="skill-pct">60%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar purple" style="--w:60%"></div></div>
+              </div>
+              <div class="skill-row glass-card" id="skill-threejs">
+                <span class="skill-icon material-symbols-outlined" aria-hidden="true">deployed_code</span>
+                <div class="skill-info">
+                  <span class="skill-name">Three.js</span>
+                  <span class="skill-pct">75%</span>
+                </div>
+                <div class="skill-track"><div class="skill-bar purple" style="--w:75%"></div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <div class="section-container">
+        <header class="section-header">
+          <p class="section-label">What I've built</p>
+          <h2 id="projects-heading" class="section-title">Featured <span class="accent-blue">Projects</span></h2>
+        </header>
+
+        <div class="projects-grid">
+
+          <article class="project-card glass-card featured" id="proj-jarvis">
+            <div class="project-badge-row">
+              <span class="lang-dot lang-js">● JavaScript</span>
+              <span class="proj-badge">Featured</span>
+            </div>
+            <h3 class="proj-title">Jarvis-Protocol</h3>
+            <p class="proj-desc">A cinematic 3D interface built with Three.js featuring a rotating holographic globe with interactive data nodes. A technical showcase of immersive web design blending high-fidelity visuals with real-time interaction.</p>
+            <div class="proj-tags" aria-label="Technologies">
+              <span class="tag">Three.js</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">WebGL</span>
+            </div>
+            <a href="https://github.com/Noufanudheen/Jarvis-Protocol" target="_blank" rel="noopener noreferrer"
+               class="btn btn-glass btn-sm proj-btn" id="btn-jarvis">View on GitHub →</a>
+          </article>
+
+          <article class="project-card glass-card" id="proj-mowo">
+            <div class="project-badge-row">
+              <span class="lang-dot lang-js">● JavaScript</span>
+              <a href="https://github.com/Noufanudheen/ProjectMOWO" target="_blank" rel="noopener noreferrer"
+                 class="ext-link-icon" aria-label="GitHub link" id="link-mowo">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+            <h3 class="proj-title">ProjectMOWO</h3>
+            <p class="proj-desc">Lightweight, easy-to-use app for tracking local buses in real-time using packaged JSON data storage.</p>
+            <div class="proj-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">JSON</span>
+              <span class="tag">Transit</span>
+            </div>
+            <a href="https://github.com/Noufanudheen/ProjectMOWO" target="_blank" rel="noopener noreferrer"
+               class="btn btn-glass btn-sm proj-btn" id="btn-mowo">View →</a>
+          </article>
+
+          <article class="project-card glass-card" id="proj-autodoc">
+            <div class="project-badge-row">
+              <span class="lang-dot lang-ts">● TypeScript</span>
+              <a href="https://github.com/Noufanudheen/Automatic-Documentation_Creator" target="_blank" rel="noopener noreferrer"
+                 class="ext-link-icon" aria-label="GitHub link" id="link-autodoc">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+            <h3 class="proj-title">Auto-Doc Creator</h3>
+            <p class="proj-desc">Documentation Generator Web App that helps students and professionals create clean, well-structured technical documents without manually writing reports.</p>
+            <div class="proj-tags">
+              <span class="tag">TypeScript</span>
+              <span class="tag">Web App</span>
+            </div>
+            <a href="https://github.com/Noufanudheen/Automatic-Documentation_Creator" target="_blank" rel="noopener noreferrer"
+               class="btn btn-glass btn-sm proj-btn" id="btn-autodoc">View →</a>
+          </article>
+
+          <article class="project-card glass-card" id="proj-ytdl">
+            <div class="project-badge-row">
+              <span class="lang-dot lang-py">● Python</span>
+              <a href="https://github.com/Noufanudheen/YouTube-Audio-Video-Downloader" target="_blank" rel="noopener noreferrer"
+                 class="ext-link-icon" aria-label="GitHub link" id="link-ytdl">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+            <h3 class="proj-title">YT Audio/Video DL</h3>
+            <p class="proj-desc">Python-based packaged app to download YouTube videos or playlists, or host a Telegram bot for automated download management.</p>
+            <div class="proj-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Telegram Bot</span>
+            </div>
+            <a href="https://github.com/Noufanudheen/YouTube-Audio-Video-Downloader" target="_blank" rel="noopener noreferrer"
+               class="btn btn-glass btn-sm proj-btn" id="btn-ytdl">View →</a>
+          </article>
+
+          <article class="project-card glass-card" id="proj-raphael">
+            <div class="project-badge-row">
+              <span class="lang-dot lang-shell">● Shell</span>
+              <a href="https://github.com/Noufanudheen/Raphael-Popup-Cam-call-light" target="_blank" rel="noopener noreferrer"
+                 class="ext-link-icon" aria-label="GitHub link" id="link-raphael">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+            <h3 class="proj-title">Raphael Cam Light</h3>
+            <p class="proj-desc">Lightweight utility to control the popup camera call light on Raphael (Redmi K20 / Mi 9t) devices via shell scripting.</p>
+            <div class="proj-tags">
+              <span class="tag">Shell</span>
+              <span class="tag">Android</span>
+            </div>
+            <a href="https://github.com/Noufanudheen/Raphael-Popup-Cam-call-light" target="_blank" rel="noopener noreferrer"
+               class="btn btn-glass btn-sm proj-btn" id="btn-raphael">View →</a>
+          </article>
+
+          <article class="project-card more-card neu-card" id="proj-more">
+            <svg class="more-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <h3 class="more-title">See All Projects</h3>
+            <p class="more-sub">Explore more on GitHub</p>
+            <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer"
+               class="btn btn-glass btn-sm" id="btn-all-projects">github.com/Noufanudheen →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <div class="section-container">
+        <header class="section-header">
+          <p class="section-label">Let's connect</p>
+          <h2 id="contact-heading" class="section-title">Get In <span class="accent-red">Touch</span></h2>
+        </header>
+
+        <div class="contact-layout">
+          <p class="contact-intro">
+            Have an idea, want to collaborate, or just say hi?<br/>
+            My inbox is always open — I'll respond as soon as possible.
+          </p>
+
+          <div class="contact-row">
+            <a href="mailto:noufanudheen@gmail.com"
+               class="contact-card glass-card" id="contact-email"
+               aria-label="Send email">
+              <div class="contact-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+              </div>
+              <h3 class="contact-label">Email</h3>
+              <p class="contact-val">noufanudheen@gmail.com</p>
+            </a>
+
+            <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer"
+               class="contact-card glass-card" id="contact-github"
+               aria-label="GitHub profile">
+              <div class="contact-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              </div>
+              <h3 class="contact-label">GitHub</h3>
+              <p class="contact-val">github.com/Noufanudheen</p>
+            </a>
+
+            <a href="https://www.linkedin.com/in/noufanudheen-c-96842925a/" target="_blank" rel="noopener noreferrer"
+               class="contact-card glass-card" id="contact-linkedin"
+               aria-label="LinkedIn profile">
+              <div class="contact-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </div>
+              <h3 class="contact-label">LinkedIn</h3>
+              <p class="contact-val">noufanudheen-c</p>
+            </a>
+          </div>
+
+          <a href="mailto:noufanudheen@gmail.com"
+             class="btn btn-glass btn-primary btn-lg" id="btn-say-hello">Say Hello</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-copy">© 2025 <span class="accent-blue">Noufanudheen</span> — Crafted with pure CSS</p>
+      <p class="footer-tagline">Always experimenting. Always building.</p>
+      <nav class="footer-nav" aria-label="Footer links">
+        <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer" id="footer-gh">GitHub</a>
+        <a href="https://www.linkedin.com/in/noufanudheen-c-96842925a/" target="_blank" rel="noopener noreferrer" id="footer-li">LinkedIn</a>
+        <a href="mailto:noufanudheen@gmail.com" id="footer-em">Email</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
