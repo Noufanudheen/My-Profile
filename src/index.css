@@ -1113,9 +1113,10 @@ section {
 }
 
 @media (max-width: 768px) {
-  .nav-links { display: flex; gap: 2px; }
-  .nav-link { font-size: 0.78rem; padding: 6px 10px; }
-  #btn-github-nav { font-size: 0.78rem; padding: 6px 12px; }
+  .nav-links { display: flex; gap: 8px; }
+  .nav-link { font-size: 0.88rem; padding: 6px 14px; }
+  #nav-about, #nav-skills { display: none !important; }
+  #btn-github-nav { display: none !important; }
   .hamburger { display: none !important; }
 
   .hero-geo { display: none; }
