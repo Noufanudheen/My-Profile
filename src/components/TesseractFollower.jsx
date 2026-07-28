@@ -39,13 +39,6 @@ const TesseractFollower = () => {
     );
     tesseractGroup.add(cube2);
 
-    // Core Glowing Octahedron
-    const core = new THREE.Mesh(
-      new THREE.OctahedronGeometry(0.4, 0),
-      new THREE.MeshBasicMaterial({ color: 0x33ccff, transparent: true, opacity: 0.85 })
-    );
-    tesseractGroup.add(core);
-
     // Mouse tilt tracking
     let targetMouseX = 0;
     let targetMouseY = 0;
