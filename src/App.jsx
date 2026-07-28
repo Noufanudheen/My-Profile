@@ -123,6 +123,7 @@ function App() {
             </h1>
 
             <p className="hero-title anim-fade-up" style={{ '--d': '0.45s' }} aria-label="Software Developer">
+              <span className="title-prefix">-</span>
               <span className="typing-wrap">
                 <span className="typing-text">Software Developer</span>
               </span>
@@ -549,7 +550,7 @@ function App() {
             <div className="contact-layout">
               <p className="contact-intro">
                 Have an idea, want to collaborate, or just say hi?<br />
-                My inbox is always open. I'll respond as soon as possible.
+                My inbox is always open, I'll respond as soon as possible.
               </p>
 
               <div className="contact-row">
@@ -614,7 +615,7 @@ function App() {
       {/* Footer */}
       <footer id="site-footer" role="contentinfo">
         <div className="footer-inner">
-          <p className="footer-copy">© 2025 <span className="accent-blue">Noufanudheen</span> | Built with React &amp; CSS</p>
+          <p className="footer-copy">© 2025 <span className="accent-blue">Noufanudheen</span> · Built with React &amp; CSS</p>
           <p className="footer-tagline">Always experimenting. Always building.</p>
           <nav className="footer-nav" aria-label="Footer links">
             <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer" id="footer-gh">GitHub</a>
