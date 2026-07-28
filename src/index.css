@@ -1,5 +1,5 @@
 /* ============================================================
-   NOUFANUDHEEN — PROFILE PAGE
+   NOUFANUDHEEN | PROFILE PAGE
    Design: Hyper-Realistic Frosted Glassmorphism + Neumorphism
    Theme:  Deep Space · Electric Blue · Cyber Red · Refractive Glass
    ============================================================ */
@@ -752,7 +752,7 @@ section {
 }
 .about-body strong { color: var(--white); font-weight: 600; }
 
-/* Stat grid — neumorphic */
+/* Stat grid: neumorphic */
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -830,7 +830,7 @@ section {
   font-family: var(--f-head);
 }
 
-/* Skill progress bar — CSS animated */
+/* Skill progress bar: CSS animated */
 .skill-track {
   height: 4px;
   background: rgba(255,255,255,0.08);
