@@ -7,7 +7,7 @@ const TesseractFollower = () => {
 
   useEffect(() => {
     // -----------------------------------------------------------
-    // 1. LIGHTWEIGHT 3D TESSERACT FOLLOWER (Three.js)
+    // 1. CENTERED 3D TESSERACT WITH SUBTLE MOUSE TILT & ROTATION
     // -----------------------------------------------------------
     const container = containerRef.current;
     if (!container) return;
@@ -17,7 +17,7 @@ const TesseractFollower = () => {
     camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(140, 140);
+    renderer.setSize(220, 220);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
@@ -25,54 +25,58 @@ const TesseractFollower = () => {
     const tesseractGroup = new THREE.Group();
     scene.add(tesseractGroup);
 
-    // Outer Wireframe Cube
+    // Outer Wireframe Cube (Electric Blue)
     const cube1 = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.BoxGeometry(1.6, 1.6, 1.6)),
-      new THREE.LineBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.75 })
+      new THREE.LineBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.8 })
     );
     tesseractGroup.add(cube1);
 
-    // Inner Wireframe Cube
+    // Inner Wireframe Cube (Cyber Red)
     const cube2 = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.BoxGeometry(1.0, 1.0, 1.0)),
-      new THREE.LineBasicMaterial({ color: 0xff2255, transparent: true, opacity: 0.6 })
+      new THREE.LineBasicMaterial({ color: 0xff2255, transparent: true, opacity: 0.65 })
     );
     tesseractGroup.add(cube2);
 
     // Core Glowing Octahedron
     const core = new THREE.Mesh(
       new THREE.OctahedronGeometry(0.4, 0),
-      new THREE.MeshBasicMaterial({ color: 0x33ccff, transparent: true, opacity: 0.8 })
+      new THREE.MeshBasicMaterial({ color: 0x33ccff, transparent: true, opacity: 0.85 })
     );
     tesseractGroup.add(core);
 
-    // Mouse position tracking
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let currentX = targetX;
-    let currentY = targetY;
+    // Mouse tilt tracking
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    let currentMouseX = 0;
+    let currentMouseY = 0;
 
     const handleMouseMove = (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
+      // Normalized mouse coordinates (-1 to 1)
+      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
 
     let animId;
     const animateTesseract = () => {
-      // Rotate hypercube
-      tesseractGroup.rotation.x += 0.01;
-      tesseractGroup.rotation.y += 0.015;
-      cube2.rotation.x -= 0.02;
+      // Continuous 3D rotation
+      tesseractGroup.rotation.x += 0.008;
+      tesseractGroup.rotation.y += 0.012;
+      cube2.rotation.x -= 0.015;
       cube2.rotation.z += 0.01;
 
-      // Smooth lag-free mouse chase (Lerp)
-      currentX += (targetX - currentX) * 0.06;
-      currentY += (targetY - currentY) * 0.06;
+      // Smooth subtle mouse inertia / tilt towards mouse
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
 
+      // Subtle position sway from center (max ~20px)
       if (container) {
-        container.style.transform = `translate3d(${currentX - 70}px, ${currentY - 70}px, 0)`;
+        const swayX = currentMouseX * 25;
+        const swayY = currentMouseY * 25;
+        container.style.transform = `translate(-50%, -50%) translate3d(${swayX}px, ${swayY}px, 0)`;
       }
 
       renderer.render(scene, camera);
@@ -82,11 +86,20 @@ const TesseractFollower = () => {
     animateTesseract();
 
     // -----------------------------------------------------------
-    // 2. SCATTERED INTERACTIVE STARS (React DOM + Lerp Physics)
+    // 2. SCATTERED INTERACTIVE STARS (Shift 0.5cm on Mouse Proximity)
     // -----------------------------------------------------------
-    const starCount = 35; // Light count to prevent lag
+    const starCount = 35;
     const starsData = [];
     const starsParent = starsContainerRef.current;
+
+    let mouseXPos = window.innerWidth / 2;
+    let mouseYPos = window.innerHeight / 2;
+
+    const trackMousePos = (e) => {
+      mouseXPos = e.clientX;
+      mouseYPos = e.clientY;
+    };
+    window.addEventListener('mousemove', trackMousePos);
 
     if (starsParent) {
       starsParent.innerHTML = '';
@@ -96,7 +109,7 @@ const TesseractFollower = () => {
 
         const originX = Math.random() * window.innerWidth;
         const originY = Math.random() * window.innerHeight;
-        const size = Math.random() * 3 + 2; // 2px - 5px
+        const size = Math.random() * 3 + 2;
         const colorChoice = Math.random();
         const color = colorChoice < 0.5 ? '#00aaff' : colorChoice < 0.8 ? '#ff2255' : '#ffffff';
 
@@ -128,30 +141,27 @@ const TesseractFollower = () => {
       }
     }
 
-    // Star physics animation loop
+    // Star animation loop
     let starAnimId;
-    const maxDistance = 140; // Range of mouse influence
+    const maxDistance = 140;
     const pushDistance = 20; // ~0.5 cm shift
 
     const animateStars = () => {
       for (let i = 0; i < starsData.length; i++) {
         const star = starsData[i];
-        const dx = targetX - star.originX;
-        const dy = targetY - star.originY;
+        const dx = mouseXPos - star.originX;
+        const dy = mouseYPos - star.originY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         let destX = star.originX;
         let destY = star.originY;
 
         if (dist < maxDistance && dist > 0) {
-          // Calculate displacement angle
           const angle = Math.atan2(dy, dx);
-          // Shift 0.5cm (approx 20px) away from cursor
           destX = star.originX - Math.cos(angle) * pushDistance;
           destY = star.originY - Math.sin(angle) * pushDistance;
         }
 
-        // Smooth Lerp back to origin or pushed position
         star.currentX += (destX - star.currentX) * 0.08;
         star.currentY += (destY - star.currentY) * 0.08;
 
@@ -170,6 +180,7 @@ const TesseractFollower = () => {
       cancelAnimationFrame(animId);
       cancelAnimationFrame(starAnimId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', trackMousePos);
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }
@@ -182,19 +193,21 @@ const TesseractFollower = () => {
       {/* Scattered Interactive Stars Layer */}
       <div ref={starsContainerRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
 
-      {/* Mouse Following 3D Tesseract */}
+      {/* Center-Floating Rotating 3D Tesseract */}
       <div
         ref={containerRef}
         style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '140px',
-          height: '140px',
+          top: '48%',
+          left: '75%',
+          width: '220px',
+          height: '220px',
           pointerEvents: 'none',
-          zIndex: 1,
+          zIndex: 0,
+          opacity: 0.75,
+          transform: 'translate(-50%, -50%)',
           willChange: 'transform',
-          filter: 'drop-shadow(0 0 12px rgba(0, 170, 255, 0.4))',
+          filter: 'drop-shadow(0 0 20px rgba(0, 170, 255, 0.4))',
         }}
       />
     </>
