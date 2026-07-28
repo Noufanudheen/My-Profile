@@ -7,7 +7,7 @@ const TesseractFollower = () => {
 
   useEffect(() => {
     // -----------------------------------------------------------
-    // 1. TESSERACT WITH MOTION-DRIVEN ROTATION & INERTIAL DECELERATION
+    // 1. TESSERACT WITH CLAMPED RELAXING MOTION-DRIVEN ROTATION
     // -----------------------------------------------------------
     const container = containerRef.current;
     if (!container) return;
@@ -51,6 +51,9 @@ const TesseractFollower = () => {
     let angularVelX = 0;
     let angularVelY = 0;
 
+    // Max speed limit (relaxing & non-nauseating)
+    const MAX_SPEED = 0.012;
+
     const handleMouseMove = (e) => {
       // Calculate velocity vector of mouse movement
       const deltaX = e.clientX - lastMouseX;
@@ -59,9 +62,13 @@ const TesseractFollower = () => {
       lastMouseX = e.clientX;
       lastMouseY = e.clientY;
 
-      // Add angular momentum proportional to mouse velocity and direction
-      angularVelY += deltaX * 0.0012;
-      angularVelX += deltaY * 0.0012;
+      // Add gentle angular impulse
+      angularVelY += deltaX * 0.00018;
+      angularVelX += deltaY * 0.00018;
+
+      // Clamp max rotational velocity
+      angularVelY = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, angularVelY));
+      angularVelX = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, angularVelX));
 
       // Normalized position for subtle container sway
       targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -72,18 +79,18 @@ const TesseractFollower = () => {
 
     let animId;
     const animateTesseract = () => {
-      // Rotate tesseract in direction of movement velocity
+      // Rotate tesseract gracefully in direction of movement velocity
       tesseractGroup.rotation.y += angularVelY;
       tesseractGroup.rotation.x += angularVelX;
-      cube2.rotation.z -= angularVelY * 0.6;
+      cube2.rotation.z -= angularVelY * 0.5;
 
-      // Friction Deceleration: Smoothly slow down rotation when mouse stops
-      angularVelX *= 0.91;
-      angularVelY *= 0.91;
+      // Gentle Friction Deceleration: Smoothly slow down rotation when mouse stops
+      angularVelX *= 0.94;
+      angularVelY *= 0.94;
 
       // Stop micro-movements when velocity is near zero
-      if (Math.abs(angularVelX) < 0.00005) angularVelX = 0;
-      if (Math.abs(angularVelY) < 0.00005) angularVelY = 0;
+      if (Math.abs(angularVelX) < 0.00002) angularVelX = 0;
+      if (Math.abs(angularVelY) < 0.00002) angularVelY = 0;
 
       // Smooth subtle position sway from center
       currentMouseX += (targetMouseX - currentMouseX) * 0.05;
@@ -209,7 +216,7 @@ const TesseractFollower = () => {
       {/* Scattered Interactive Stars Layer */}
       <div ref={starsContainerRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
 
-      {/* Motion-Driven Decelerating 3D Tesseract */}
+      {/* Clamped Relaxing Motion-Driven 3D Tesseract */}
       <div
         ref={containerRef}
         style={{
