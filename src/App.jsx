@@ -3,20 +3,37 @@ import TesseractFollower from './components/TesseractFollower';
 
 function App() {
   useEffect(() => {
-    // Dynamic Glass Refraction Mouse Highlight
-    const handleMouseMove = (e) => {
+    // Dynamic Glass Refraction Pointer Highlight (Mouse + Touch)
+    const updateGlassHighlights = (clientX, clientY) => {
       const cards = document.querySelectorAll('.glass-card');
       cards.forEach((card) => {
         const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        const x = ((clientX - rect.left) / rect.width) * 100;
+        const y = ((clientY - rect.top) / rect.height) * 100;
         card.style.setProperty('--mouse-x', `${x}%`);
         card.style.setProperty('--mouse-y', `${y}%`);
       });
     };
 
+    const handleMouseMove = (e) => {
+      updateGlassHighlights(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        updateGlassHighlights(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchMove);
+    };
   }, []);
 
   return (

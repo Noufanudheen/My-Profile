@@ -7,7 +7,7 @@ const TesseractFollower = () => {
 
   useEffect(() => {
     // -----------------------------------------------------------
-    // 1. TESSERACT WITH CLAMPED RELAXING MOTION-DRIVEN ROTATION
+    // 1. TESSERACT WITH CLAMPED MOTION-DRIVEN ROTATION (Mouse + Touch)
     // -----------------------------------------------------------
     const container = containerRef.current;
     if (!container) return;
@@ -40,13 +40,13 @@ const TesseractFollower = () => {
     tesseractGroup.add(cube2);
 
     // Physics variables for rotational inertia
-    let lastMouseX = window.innerWidth / 2;
-    let lastMouseY = window.innerHeight / 2;
+    let lastX = window.innerWidth / 2;
+    let lastY = window.innerHeight / 2;
 
-    let targetMouseX = 0;
-    let targetMouseY = 0;
-    let currentMouseX = 0;
-    let currentMouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
 
     let angularVelX = 0;
     let angularVelY = 0;
@@ -54,13 +54,12 @@ const TesseractFollower = () => {
     // Max speed limit (relaxing & non-nauseating)
     const MAX_SPEED = 0.012;
 
-    const handleMouseMove = (e) => {
-      // Calculate velocity vector of mouse movement
-      const deltaX = e.clientX - lastMouseX;
-      const deltaY = e.clientY - lastMouseY;
+    const handlePointerMove = (clientX, clientY) => {
+      const deltaX = clientX - lastX;
+      const deltaY = clientY - lastY;
 
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
+      lastX = clientX;
+      lastY = clientY;
 
       // Add gentle angular impulse
       angularVelY += deltaX * 0.00018;
@@ -71,11 +70,31 @@ const TesseractFollower = () => {
       angularVelX = Math.max(-MAX_SPEED, Math.min(MAX_SPEED, angularVelX));
 
       // Normalized position for subtle container sway
-      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      targetX = (clientX / window.innerWidth - 0.5) * 2;
+      targetY = (clientY / window.innerHeight - 0.5) * 2;
+    };
+
+    const handleMouseMove = (e) => {
+      handlePointerMove(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches[0]) {
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+        handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
 
     let animId;
     const animateTesseract = () => {
@@ -84,7 +103,7 @@ const TesseractFollower = () => {
       tesseractGroup.rotation.x += angularVelX;
       cube2.rotation.z -= angularVelY * 0.5;
 
-      // Gentle Friction Deceleration: Smoothly slow down rotation when mouse stops
+      // Gentle Friction Deceleration: Smoothly slow down rotation when pointer stops
       angularVelX *= 0.94;
       angularVelY *= 0.94;
 
@@ -93,12 +112,12 @@ const TesseractFollower = () => {
       if (Math.abs(angularVelY) < 0.00002) angularVelY = 0;
 
       // Smooth subtle position sway from center
-      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+      currentX += (targetX - currentX) * 0.05;
+      currentY += (targetY - currentY) * 0.05;
 
       if (container) {
-        const swayX = currentMouseX * 25;
-        const swayY = currentMouseY * 25;
+        const swayX = currentX * 25;
+        const swayY = currentY * 25;
         container.style.transform = `translate(-50%, -50%) translate3d(${swayX}px, ${swayY}px, 0)`;
       }
 
@@ -109,20 +128,28 @@ const TesseractFollower = () => {
     animateTesseract();
 
     // -----------------------------------------------------------
-    // 2. SCATTERED INTERACTIVE STARS (Shift 0.5cm on Mouse Proximity)
+    // 2. SCATTERED INTERACTIVE STARS (Shift 0.5cm on Mouse/Touch Proximity)
     // -----------------------------------------------------------
     const starCount = 35;
     const starsData = [];
     const starsParent = starsContainerRef.current;
 
-    let mouseXPos = window.innerWidth / 2;
-    let mouseYPos = window.innerHeight / 2;
+    let pointerXPos = window.innerWidth / 2;
+    let pointerYPos = window.innerHeight / 2;
 
-    const trackMousePos = (e) => {
-      mouseXPos = e.clientX;
-      mouseYPos = e.clientY;
+    const trackPointerPos = (e) => {
+      if (e.touches && e.touches[0]) {
+        pointerXPos = e.touches[0].clientX;
+        pointerYPos = e.touches[0].clientY;
+      } else {
+        pointerXPos = e.clientX;
+        pointerYPos = e.clientY;
+      }
     };
-    window.addEventListener('mousemove', trackMousePos);
+
+    window.addEventListener('mousemove', trackPointerPos);
+    window.addEventListener('touchmove', trackPointerPos, { passive: true });
+    window.addEventListener('touchstart', trackPointerPos, { passive: true });
 
     if (starsParent) {
       starsParent.innerHTML = '';
@@ -172,8 +199,8 @@ const TesseractFollower = () => {
     const animateStars = () => {
       for (let i = 0; i < starsData.length; i++) {
         const star = starsData[i];
-        const dx = mouseXPos - star.originX;
-        const dy = mouseYPos - star.originY;
+        const dx = pointerXPos - star.originX;
+        const dy = pointerYPos - star.originY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         let destX = star.originX;
@@ -203,7 +230,11 @@ const TesseractFollower = () => {
       cancelAnimationFrame(animId);
       cancelAnimationFrame(starAnimId);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousemove', trackMousePos);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('mousemove', trackPointerPos);
+      window.removeEventListener('touchmove', trackPointerPos);
+      window.removeEventListener('touchstart', trackPointerPos);
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }
@@ -216,7 +247,7 @@ const TesseractFollower = () => {
       {/* Scattered Interactive Stars Layer */}
       <div ref={starsContainerRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
 
-      {/* Clamped Relaxing Motion-Driven 3D Tesseract */}
+      {/* Touch & Mouse Motion-Driven 3D Tesseract */}
       <div
         ref={containerRef}
         style={{
