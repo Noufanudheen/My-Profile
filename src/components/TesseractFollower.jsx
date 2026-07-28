@@ -7,7 +7,7 @@ const TesseractFollower = () => {
 
   useEffect(() => {
     // -----------------------------------------------------------
-    // 1. CENTERED 3D TESSERACT WITH SUBTLE MOUSE TILT & ROTATION
+    // 1. TESSERACT WITH MOTION-DRIVEN ROTATION & INERTIAL DECELERATION
     // -----------------------------------------------------------
     const container = containerRef.current;
     if (!container) return;
@@ -28,25 +28,42 @@ const TesseractFollower = () => {
     // Outer Wireframe Cube (Electric Blue)
     const cube1 = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.BoxGeometry(1.6, 1.6, 1.6)),
-      new THREE.LineBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.8 })
+      new THREE.LineBasicMaterial({ color: 0x00aaff, transparent: true, opacity: 0.85 })
     );
     tesseractGroup.add(cube1);
 
     // Inner Wireframe Cube (Cyber Red)
     const cube2 = new THREE.LineSegments(
       new THREE.WireframeGeometry(new THREE.BoxGeometry(1.0, 1.0, 1.0)),
-      new THREE.LineBasicMaterial({ color: 0xff2255, transparent: true, opacity: 0.65 })
+      new THREE.LineBasicMaterial({ color: 0xff2255, transparent: true, opacity: 0.7 })
     );
     tesseractGroup.add(cube2);
 
-    // Mouse tilt tracking
+    // Physics variables for rotational inertia
+    let lastMouseX = window.innerWidth / 2;
+    let lastMouseY = window.innerHeight / 2;
+
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
     let currentMouseY = 0;
 
+    let angularVelX = 0;
+    let angularVelY = 0;
+
     const handleMouseMove = (e) => {
-      // Normalized mouse coordinates (-1 to 1)
+      // Calculate velocity vector of mouse movement
+      const deltaX = e.clientX - lastMouseX;
+      const deltaY = e.clientY - lastMouseY;
+
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+
+      // Add angular momentum proportional to mouse velocity and direction
+      angularVelY += deltaX * 0.0012;
+      angularVelX += deltaY * 0.0012;
+
+      // Normalized position for subtle container sway
       targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
       targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
@@ -55,17 +72,23 @@ const TesseractFollower = () => {
 
     let animId;
     const animateTesseract = () => {
-      // Continuous 3D rotation
-      tesseractGroup.rotation.x += 0.008;
-      tesseractGroup.rotation.y += 0.012;
-      cube2.rotation.x -= 0.015;
-      cube2.rotation.z += 0.01;
+      // Rotate tesseract in direction of movement velocity
+      tesseractGroup.rotation.y += angularVelY;
+      tesseractGroup.rotation.x += angularVelX;
+      cube2.rotation.z -= angularVelY * 0.6;
 
-      // Smooth subtle mouse inertia / tilt towards mouse
+      // Friction Deceleration: Smoothly slow down rotation when mouse stops
+      angularVelX *= 0.91;
+      angularVelY *= 0.91;
+
+      // Stop micro-movements when velocity is near zero
+      if (Math.abs(angularVelX) < 0.00005) angularVelX = 0;
+      if (Math.abs(angularVelY) < 0.00005) angularVelY = 0;
+
+      // Smooth subtle position sway from center
       currentMouseX += (targetMouseX - currentMouseX) * 0.05;
       currentMouseY += (targetMouseY - currentMouseY) * 0.05;
 
-      // Subtle position sway from center (max ~20px)
       if (container) {
         const swayX = currentMouseX * 25;
         const swayY = currentMouseY * 25;
@@ -137,7 +160,7 @@ const TesseractFollower = () => {
     // Star animation loop
     let starAnimId;
     const maxDistance = 140;
-    const pushDistance = 20; // ~0.5 cm shift
+    const pushDistance = 20;
 
     const animateStars = () => {
       for (let i = 0; i < starsData.length; i++) {
@@ -186,7 +209,7 @@ const TesseractFollower = () => {
       {/* Scattered Interactive Stars Layer */}
       <div ref={starsContainerRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} />
 
-      {/* Center-Floating Rotating 3D Tesseract */}
+      {/* Motion-Driven Decelerating 3D Tesseract */}
       <div
         ref={containerRef}
         style={{
