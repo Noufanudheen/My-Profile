@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import TesseractFollower from './components/TesseractFollower';
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,9 @@ function App() {
 
   return (
     <>
+      {/* Interactive 3D Tesseract Cursor Follower & Scattered Stars */}
+      <TesseractFollower />
+
       {/* Background Ambient Layer (Pure GPU CSS, Zero WebGL Overhead) */}
       <div className="bg-layer" aria-hidden="true">
         <div className="bg-orb bg-orb-1"></div>
