@@ -1,7 +1,7 @@
 /* ============================================================
    NOUFANUDHEEN — PROFILE PAGE
-   Design: Glassmorphism + Neumorphism  |  Zero JavaScript
-   Theme:  Black · Electric Blue · Red · White-ish
+   Design: Hyper-Realistic Frosted Glassmorphism + Neumorphism
+   Theme:  Deep Space · Electric Blue · Cyber Red · Refractive Glass
    ============================================================ */
 
 /* ── Design Tokens ─────────────────────────────────────────── */
@@ -11,21 +11,26 @@
   --bg-2:          #0a0a14;
   --blue:          #00aaff;
   --blue-hi:       #33ccff;
-  --blue-glow:     rgba(0, 170, 255, 0.30);
+  --blue-glow:     rgba(0, 170, 255, 0.35);
   --red:           #ff2255;
   --red-hi:        #ff5577;
-  --red-glow:      rgba(255, 34, 85, 0.30);
+  --red-glow:      rgba(255, 34, 85, 0.35);
   --purple:        #9955ff;
   --white:         #f0f4ff;
   --white-70:      rgba(240,244,255,0.70);
   --white-40:      rgba(240,244,255,0.40);
   --white-15:      rgba(240,244,255,0.15);
 
-  /* Glass */
-  --glass-bg:      rgba(255,255,255,0.042);
-  --glass-border:  rgba(255,255,255,0.11);
-  --glass-blur:    18px;
-  --glass-shadow:  0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px var(--glass-border);
+  /* Realistic Glass Specular Tokens */
+  --glass-bg:        linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --glass-border-top: rgba(255, 255, 255, 0.32);
+  --glass-border-left: rgba(255, 255, 255, 0.18);
+  --glass-border-bot: rgba(255, 255, 255, 0.08);
+  --glass-blur:      24px;
+  --glass-shadow:    
+    0 20px 50px rgba(0, 0, 0, 0.65),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.45);
 
   /* Neumorphism (dark) */
   --neu-bg:        #0d0d1a;
@@ -69,7 +74,7 @@ svg, img { display: block; }
 
 ::selection { background: var(--blue-glow); color: var(--white); }
 
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(var(--blue), var(--red));
@@ -94,58 +99,58 @@ svg, img { display: block; }
   pointer-events: none;
 }
 
-/* Ambient orbs */
+/* Ambient glowing orbs */
 .bg-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.18;
-  animation: orbFloat 12s ease-in-out infinite;
+  filter: blur(110px);
+  opacity: 0.22;
+  animation: orbFloat 14s ease-in-out infinite;
 }
 .bg-orb-1 {
-  width: 600px; height: 600px;
+  width: 650px; height: 650px;
   background: var(--blue);
   top: -150px; left: -150px;
   animation-delay: 0s;
 }
 .bg-orb-2 {
-  width: 500px; height: 500px;
+  width: 550px; height: 550px;
   background: var(--red);
-  top: 40%; right: -120px;
-  animation-delay: -4s;
+  top: 38%; right: -120px;
+  animation-delay: -5s;
 }
 .bg-orb-3 {
-  width: 400px; height: 400px;
+  width: 450px; height: 450px;
   background: var(--purple);
-  bottom: -100px; left: 30%;
-  animation-delay: -8s;
-  opacity: 0.10;
+  bottom: -100px; left: 25%;
+  animation-delay: -9s;
+  opacity: 0.15;
 }
 
 /* Decorative polygon shapes */
 .bg-poly {
   position: absolute;
-  opacity: 0.055;
+  opacity: 0.06;
   animation: polyRotate 30s linear infinite;
 }
 .bg-poly-1 {
-  width: 400px; height: 400px;
-  top: 10%; left: 60%;
+  width: 420px; height: 420px;
+  top: 8%; left: 58%;
   background: linear-gradient(135deg, var(--blue), transparent);
   clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
   animation-duration: 28s;
 }
 .bg-poly-2 {
-  width: 280px; height: 280px;
-  top: 55%; left: 5%;
+  width: 300px; height: 300px;
+  top: 52%; left: 4%;
   background: linear-gradient(135deg, var(--red), transparent);
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   animation-duration: 40s;
   animation-direction: reverse;
 }
 .bg-poly-3 {
-  width: 220px; height: 220px;
-  bottom: 12%; right: 8%;
+  width: 240px; height: 240px;
+  bottom: 10%; right: 7%;
   background: linear-gradient(135deg, var(--purple), transparent);
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   animation-duration: 22s;
@@ -156,29 +161,81 @@ svg, img { display: block; }
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
-/* ── Glass Card ────────────────────────────────────────────── */
+/* ── REALISTIC FROSTED GLASS CARD ────────────────────────────── */
 .glass-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  
+  /* Specular Beveled Glass Border */
+  border-top: 1px solid var(--glass-border-top);
+  border-left: 1px solid var(--glass-border-left);
+  border-right: 1px solid var(--glass-border-bot);
+  border-bottom: 1px solid var(--glass-border-bot);
+  
+  border-radius: 22px;
   box-shadow: var(--glass-shadow);
-  transition: transform 0.38s var(--ease-out),
-              box-shadow 0.38s var(--ease-out),
-              border-color 0.28s;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out),
+              box-shadow 0.4s var(--ease-out),
+              border-color 0.3s ease,
+              background 0.3s ease;
 }
+
+/* Glass Surface Reflection Light Sheen */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+/* Frosted Grain / Noise Overlay simulation */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
 .glass-card:hover {
-  transform: translateY(-7px) scale(1.012);
-  border-color: rgba(0,170,255,0.32);
+  transform: translateY(-8px) scale(1.015);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-top-color: rgba(255, 255, 255, 0.55);
+  border-left-color: rgba(0, 170, 255, 0.45);
   box-shadow:
-    0 24px 64px rgba(0,0,0,0.65),
-    0 0 36px var(--blue-glow),
-    0 0 0 1px rgba(0,170,255,0.22);
+    0 30px 70px rgba(0, 0, 0, 0.7),
+    0 0 35px var(--blue-glow),
+    inset 0 2px 2px rgba(255, 255, 255, 0.5),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card:hover::before {
+  left: 150%;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
 }
 
 /* ── Neumorphic Card ───────────────────────────────────────── */
@@ -186,7 +243,7 @@ svg, img { display: block; }
   background: var(--neu-bg);
   border-radius: 18px;
   box-shadow: var(--neu-out);
-  border: 1px solid rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.03);
   transition: box-shadow 0.36s var(--ease-out), transform 0.36s var(--ease-out);
 }
 .neu-card:hover {
@@ -222,7 +279,7 @@ svg, img { display: block; }
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -230,26 +287,31 @@ svg, img { display: block; }
 
 /* Glass button */
 .btn-glass {
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--white);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.09);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.25);
 }
 .btn-glass:hover {
-  border-color: rgba(0,170,255,0.50);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.40), 0 0 24px var(--blue-glow);
+  border-color: rgba(0,170,255,0.60);
+  box-shadow: 0 10px 36px rgba(0,0,0,0.45), 0 0 28px var(--blue-glow);
   transform: translateY(-3px) scale(1.03);
 }
 
 /* Primary tint */
 .btn-primary {
-  background: linear-gradient(135deg, rgba(0,170,255,0.22), rgba(0,100,210,0.18));
-  border-color: rgba(0,170,255,0.52);
+  background: linear-gradient(135deg, rgba(0,170,255,0.26), rgba(0,100,210,0.20));
+  border-top-color: rgba(0,210,255,0.65);
+  border-left-color: rgba(0,170,255,0.45);
   color: var(--blue-hi);
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, rgba(0,170,255,0.38), rgba(0,100,210,0.32));
+  background: linear-gradient(135deg, rgba(0,170,255,0.42), rgba(0,100,210,0.35));
   box-shadow: 0 0 44px var(--blue-glow), 0 8px 28px rgba(0,0,0,0.4);
   color: #fff;
 }
@@ -276,10 +338,10 @@ svg, img { display: block; }
   inset: 0 0 auto 0;
   z-index: var(--z-nav);
   padding: 0 clamp(20px, 4vw, 64px);
-  background: rgba(5,5,8,0.55);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--glass-border);
+  background: rgba(5,5,8,0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--glass-border-bot);
 }
 
 #main-nav {
@@ -580,7 +642,10 @@ section {
   width: 44px; height: 44px;
   border-radius: 50%;
   background: rgba(255,255,255,0.05);
-  border: 1px solid var(--glass-border);
+  border-top: 1px solid rgba(255,255,255,0.2);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   color: var(--white-40);
   transition: all 0.30s var(--ease-bounce);
 }
@@ -767,7 +832,7 @@ section {
 
 /* Skill progress bar — CSS animated */
 .skill-track {
-  height: 3px;
+  height: 4px;
   background: rgba(255,255,255,0.08);
   border-radius: 2px;
   overflow: hidden;
@@ -824,9 +889,10 @@ section {
   text-transform: uppercase;
   padding: 3px 11px;
   border-radius: 50px;
-  background: linear-gradient(135deg, rgba(0,170,255,0.22), rgba(0,100,200,0.15));
-  border: 1px solid rgba(0,170,255,0.38);
+  background: linear-gradient(135deg, rgba(0,170,255,0.25), rgba(0,100,200,0.15));
+  border: 1px solid rgba(0,170,255,0.45);
   color: var(--blue-hi);
+  box-shadow: 0 0 10px rgba(0, 170, 255, 0.2);
 }
 
 .ext-link-icon {
@@ -864,8 +930,8 @@ section {
   font-weight: 500;
   padding: 4px 13px;
   border-radius: 50px;
-  background: rgba(255,255,255,0.055);
-  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
   color: var(--white-40);
   letter-spacing: 0.02em;
 }
@@ -957,9 +1023,9 @@ section {
 /* ── Footer ────────────────────────────────────────────────── */
 #site-footer {
   padding: 36px clamp(20px, 5vw, 80px);
-  border-top: 1px solid var(--glass-border);
-  background: rgba(5,5,8,0.82);
-  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--glass-border-bot);
+  background: rgba(5,5,8,0.85);
+  backdrop-filter: blur(20px);
   position: relative;
   z-index: var(--z-ui);
 }
@@ -997,7 +1063,7 @@ section {
 
 @keyframes typing {
   from { width: 0; }
-  to   { width: 18ch; }    /* "Software Developer" = 19 chars */
+  to   { width: 18ch; }
 }
 
 @keyframes blink {
@@ -1074,5 +1140,5 @@ section {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .typing-text { width: 18ch; } /* Show full text immediately */
+  .typing-text { width: 18ch; }
 }
