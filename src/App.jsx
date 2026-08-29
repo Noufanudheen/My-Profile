@@ -568,7 +568,7 @@ function App() {
                   </div>
                   <h3 className="contact-label">Email</h3>
                   <p className="contact-val">noufanudheen@gmail.com</p>
-                  <p className="contact-val">contact@mcaofrit.qzz.io</p>
+                  <p className="contact-val">me@noufan.me</p>
                 </a>
 
                 <a
@@ -606,7 +606,7 @@ function App() {
                 </a>
               </div>
 
-              <a href="mailto:contact@mcaofrit.qzz.io" className="btn btn-glass btn-primary btn-lg" id="btn-say-hello">Say Hello</a>
+              <a href="mailto:me@noufan.me" className="btn btn-glass btn-primary btn-lg" id="btn-say-hello">Say Hello</a>
             </div>
           </div>
         </section>
