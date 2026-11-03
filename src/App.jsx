@@ -1,9 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  BookOpen,
+  Braces,
+  Code2,
+  Database,
+  GitBranch,
+  Globe2,
+  Palette,
+  Rocket,
+  Route,
+  Server,
+  Terminal,
+  Zap,
+} from 'lucide-react';
 import TesseractFollower from './components/TesseractFollower';
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   useEffect(() => {
-    // Dynamic Glass Refraction Pointer Highlight (Mouse + Touch)
+    let frameId = 0;
+    let latestPointer = null;
+
     const updateGlassHighlights = (clientX, clientY) => {
       const cards = document.querySelectorAll('.glass-card');
       cards.forEach((card) => {
@@ -15,29 +33,41 @@ function App() {
       });
     };
 
-    const handleMouseMove = (e) => {
-      updateGlassHighlights(e.clientX, e.clientY);
-    };
-
-    const handleTouchMove = (e) => {
-      if (e.touches && e.touches[0]) {
-        updateGlassHighlights(e.touches[0].clientX, e.touches[0].clientY);
+    const handlePointerMove = (event) => {
+      latestPointer = event;
+      if (!frameId) {
+        frameId = requestAnimationFrame(() => {
+          if (latestPointer) {
+            updateGlassHighlights(latestPointer.clientX, latestPointer.clientY);
+          }
+          frameId = 0;
+        });
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchstart', handleTouchMove, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchstart', handleTouchMove);
+      cancelAnimationFrame(frameId);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
   return (
     <>
+      <a className="skip-link" href="#main-content">Skip to content</a>
+
       {/* Interactive 3D Tesseract Cursor Follower & Scattered Stars */}
       <TesseractFollower />
 
@@ -51,9 +81,6 @@ function App() {
         <div className="bg-poly bg-poly-3"></div>
         <div className="bg-grid"></div>
       </div>
-
-      {/* Hidden checkbox for mobile nav */}
-      <input type="checkbox" id="menu-toggle" className="menu-toggle-input" aria-hidden="true" />
 
       {/* Header */}
       <header id="site-header" role="banner">
@@ -83,17 +110,30 @@ function App() {
             GitHub
           </a>
 
-          <label htmlFor="menu-toggle" className="hamburger" aria-label="Toggle mobile menu">
+          <button
+            type="button"
+            className={`hamburger${mobileMenuOpen ? ' is-open' : ''}`}
+            aria-label={mobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
+          >
             <span></span><span></span><span></span>
-          </label>
+          </button>
         </nav>
 
-        <div className="mobile-nav-overlay" role="dialog" aria-label="Mobile navigation">
+        <div
+          id="mobile-navigation"
+          className={`mobile-nav-overlay${mobileMenuOpen ? ' is-open' : ''}`}
+          role="dialog"
+          aria-label="Mobile navigation"
+          aria-hidden={!mobileMenuOpen}
+        >
           <ul role="list">
-            <li><label htmlFor="menu-toggle"><a href="#about" className="nav-link" id="mnav-about">About</a></label></li>
-            <li><label htmlFor="menu-toggle"><a href="#skills" className="nav-link" id="mnav-skills">Skills</a></label></li>
-            <li><label htmlFor="menu-toggle"><a href="#projects" className="nav-link" id="mnav-projects">Projects</a></label></li>
-            <li><label htmlFor="menu-toggle"><a href="#contact" className="nav-link" id="mnav-contact">Contact</a></label></li>
+            <li><a href="#about" className="nav-link" id="mnav-about" onClick={closeMobileMenu}>About</a></li>
+            <li><a href="#skills" className="nav-link" id="mnav-skills" onClick={closeMobileMenu}>Skills</a></li>
+            <li><a href="#projects" className="nav-link" id="mnav-projects" onClick={closeMobileMenu}>Projects</a></li>
+            <li><a href="#contact" className="nav-link" id="mnav-contact" onClick={closeMobileMenu}>Contact</a></li>
           </ul>
         </div>
       </header>
@@ -220,22 +260,22 @@ function App() {
 
               <div className="stat-grid">
                 <div className="stat-card neu-card" id="stat-education">
-                  <span className="stat-icon material-symbols-outlined" aria-hidden="true">school</span>
+                  <BookOpen className="stat-icon" aria-hidden="true" />
                   <h3 className="stat-label">Education</h3>
                   <p className="stat-value">BCA ✓<br />MCA ongoing</p>
                 </div>
                 <div className="stat-card neu-card" id="stat-focus">
-                  <span className="stat-icon material-symbols-outlined" aria-hidden="true">bolt</span>
+                  <Zap className="stat-icon" aria-hidden="true" />
                   <h3 className="stat-label">Focus</h3>
                   <p className="stat-value">Full Stack<br />Web Dev</p>
                 </div>
                 <div className="stat-card neu-card" id="stat-projects">
-                  <span className="stat-icon material-symbols-outlined" aria-hidden="true">rocket_launch</span>
+                  <Rocket className="stat-icon" aria-hidden="true" />
                   <h3 className="stat-label">Projects</h3>
                   <p className="stat-value">5+ Public<br />Repos</p>
                 </div>
                 <div className="stat-card neu-card" id="stat-passion">
-                  <span className="stat-icon material-symbols-outlined" aria-hidden="true">palette</span>
+                  <Palette className="stat-icon" aria-hidden="true" />
                   <h3 className="stat-label">Passion</h3>
                   <p className="stat-value">Design &amp;<br />3D Interfaces</p>
                 </div>
@@ -258,7 +298,7 @@ function App() {
                 <h3 className="skills-group-title">Frontend</h3>
                 <div className="skills-list">
                   <div className="skill-row glass-card" id="skill-html">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">language</span>
+                    <Globe2 className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">HTML5</span>
                       <span className="skill-pct">95%</span>
@@ -266,7 +306,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar blue" style={{ '--w': '95%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-css">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">palette</span>
+                    <Palette className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">CSS3</span>
                       <span className="skill-pct">92%</span>
@@ -274,7 +314,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar blue" style={{ '--w': '92%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-js">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">bolt</span>
+                    <Zap className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">JavaScript</span>
                       <span className="skill-pct">90%</span>
@@ -282,7 +322,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar blue" style={{ '--w': '90%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-react">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">hub</span>
+                    <Route className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">React</span>
                       <span className="skill-pct">80%</span>
@@ -296,7 +336,7 @@ function App() {
                 <h3 className="skills-group-title">Backend</h3>
                 <div className="skills-list">
                   <div className="skill-row glass-card" id="skill-node">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">dns</span>
+                    <Server className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">Node.js</span>
                       <span className="skill-pct">78%</span>
@@ -304,7 +344,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar red" style={{ '--w': '78%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-express">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">route</span>
+                    <Route className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">Express.js</span>
                       <span className="skill-pct">75%</span>
@@ -312,7 +352,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar red" style={{ '--w': '75%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-mongo">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">storage</span>
+                    <Database className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">MongoDB</span>
                       <span className="skill-pct">72%</span>
@@ -320,7 +360,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar red" style={{ '--w': '72%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-python">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">code_blocks</span>
+                    <Code2 className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">Python</span>
                       <span className="skill-pct">68%</span>
@@ -334,7 +374,7 @@ function App() {
                 <h3 className="skills-group-title">Tools</h3>
                 <div className="skills-list">
                   <div className="skill-row glass-card" id="skill-git">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">merge</span>
+                    <GitBranch className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">Git &amp; GitHub</span>
                       <span className="skill-pct">82%</span>
@@ -342,7 +382,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar purple" style={{ '--w': '82%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-ts">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">data_object</span>
+                    <Braces className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">TypeScript</span>
                       <span className="skill-pct">65%</span>
@@ -350,7 +390,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar purple" style={{ '--w': '65%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-shell">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">terminal</span>
+                    <Terminal className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">Shell / Bash</span>
                       <span className="skill-pct">60%</span>
@@ -358,7 +398,7 @@ function App() {
                     <div className="skill-track"><div className="skill-bar purple" style={{ '--w': '60%' }}></div></div>
                   </div>
                   <div className="skill-row glass-card" id="skill-threejs">
-                    <span className="skill-icon material-symbols-outlined" aria-hidden="true">deployed_code</span>
+                    <Code2 className="skill-icon" aria-hidden="true" />
                     <div className="skill-info">
                       <span className="skill-name">Three.js</span>
                       <span className="skill-pct">75%</span>
@@ -616,7 +656,7 @@ function App() {
       {/* Footer */}
       <footer id="site-footer" role="contentinfo">
         <div className="footer-inner">
-          <p className="footer-copy">© 2025 <span className="accent-blue">Noufanudheen</span> · Built with React &amp; CSS</p>
+          <p className="footer-copy">© {new Date().getFullYear()} <span className="accent-blue">Noufanudheen</span> · Built with React &amp; CSS</p>
           <p className="footer-tagline">Always experimenting. Always building.</p>
           <nav className="footer-nav" aria-label="Footer links">
             <a href="https://github.com/Noufanudheen" target="_blank" rel="noopener noreferrer" id="footer-gh">GitHub</a>

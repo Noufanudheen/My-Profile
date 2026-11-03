@@ -6,6 +6,10 @@ const TesseractFollower = () => {
   const starsContainerRef = useRef(null);
 
   useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const smallViewport = window.matchMedia('(max-width: 768px)').matches;
+    if (reducedMotion || smallViewport) return undefined;
+
     // -----------------------------------------------------------
     // 1. TESSERACT WITH CLAMPED MOTION-DRIVEN ROTATION (Mouse + Touch)
     // -----------------------------------------------------------
@@ -98,6 +102,11 @@ const TesseractFollower = () => {
 
     let animId;
     const animateTesseract = () => {
+      if (document.hidden) {
+        animId = requestAnimationFrame(animateTesseract);
+        return;
+      }
+
       // Rotate tesseract gracefully in direction of movement velocity
       tesseractGroup.rotation.y += angularVelY;
       tesseractGroup.rotation.x += angularVelX;
@@ -197,6 +206,11 @@ const TesseractFollower = () => {
     const pushDistance = 20;
 
     const animateStars = () => {
+      if (document.hidden) {
+        starAnimId = requestAnimationFrame(animateStars);
+        return;
+      }
+
       for (let i = 0; i < starsData.length; i++) {
         const star = starsData[i];
         const dx = pointerXPos - star.originX;
@@ -238,6 +252,7 @@ const TesseractFollower = () => {
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }
+      if (starsParent) starsParent.replaceChildren();
       renderer.dispose();
     };
   }, []);
